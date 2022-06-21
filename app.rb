@@ -12,6 +12,9 @@ end
 class Barber < ActiveRecord::Base
 end	
 
+class Contact < ActiveRecord::Base
+end	
+
 before do
 	@barbers = Barber.all
 end	
@@ -37,7 +40,29 @@ post '/visit' do
 	@master		 = params[:master]
 	@color		 = params[:color]
 	
-
+	# Сохранение в БД с помощью ActiveRecord
+	clnt = Client.new
+	clnt.name = @user_name
+	clnt.phone = @phone
+	clnt.datestamp = @datetime
+	clnt.barber = @master
+	clnt.color = @color
+	clnt.save
 
 	erb "<h2>Спасибо, вы  записались!</h2>"
 end
+
+get '/contacts' do
+	erb :contacts
+end
+
+post '/contacts' do
+	@user_email = params[:user_email]
+	@message = params[:message]
+
+	file = File.open './public/contacts.txt', 'a'
+  file.write "User e-mail: #{@user_email}; Message: #{@message}\n"
+  file.close
+  
+	erb "Сообщение отправлено!"
+end	
