@@ -34,21 +34,24 @@ end
 
 post '/visit' do
 
-	@user_name = params[:username]
-	@phone 		 = params[:phone]
-	@datetime  = params[:datetime]
-	@master		 = params[:master]
-	@color		 = params[:color]
-	
-	# Сохранение в БД с помощью ActiveRecord
-	clnt = Client.new
-	clnt.name = @user_name
-	clnt.phone = @phone
-	clnt.datestamp = @datetime
-	clnt.barber = @master
-	clnt.color = @color
-	clnt.save
+	c = Client.new params[:client]
+	c.save
 
+	# простой способ
+	#@user_name = params[:username]
+	#@phone 		 = params[:phone]
+	#@datetime  = params[:datetime]
+	#@master		 = params[:master]
+	#@color		 = params[:color]
+	# Сохранение в БД с помощью ActiveRecord
+	#clnt = Client.new
+	#clnt.name = @user_name
+	#clnt.phone = @phone
+	#clnt.datestamp = @datetime
+	#clnt.barber = @master
+	#clnt.color = @color
+	#clnt.save
+ 
 	erb "<h2>Спасибо, вы  записались!</h2>"
 end
 
