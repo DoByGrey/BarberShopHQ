@@ -60,9 +60,11 @@ post '/contacts' do
 	@user_email = params[:user_email]
 	@message = params[:message]
 
-	file = File.open './public/contacts.txt', 'a'
-  file.write "User e-mail: #{@user_email}; Message: #{@message}\n"
-  file.close
+	# Сохранение в БД с помощью ActiveRecord
+	c = Contact.new
+	c.user_email = @user_email
+	c.message = @message
+	c.save
   
-	erb "Сообщение отправлено!"
+	erb "<h3>Сообщение отправлено!</h3>"
 end	
